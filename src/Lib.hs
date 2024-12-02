@@ -1,9 +1,7 @@
 module Lib (main) where
 
-import qualified BookStore
+import DayOne (dayone)
 
 main :: IO ()
-main = print (BookStore.Book 312974 "Unterm Rad" ["Hermann Hesse"] )
-
-
+main = dayone
 
