@@ -1,9 +1,13 @@
 {-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE TupleSections #-}
 module DayOne (dayone) where
 
 import Data.List
+import Data.Maybe
 
 import qualified Data.Text as T
+import Data.IntMap (IntMap)
+import qualified Data.IntMap as IntMap
 
 testfile :: FilePath
 testfile = "input-files/1.test.txt"
@@ -14,6 +18,7 @@ dayone :: IO ()
 dayone = do
           inFile <- readFile realfile
           putStrLn $ "summed up distance between lists is " ++ show (firstPart inFile)
+          putStrLn $ "similarity score of lists is " ++ show (secondPart inFile)
 
 firstPart :: String -> Int
 firstPart content = do
@@ -38,3 +43,21 @@ distanceBetween :: Int -> Int -> Int
 distanceBetween x y 
               | x < y     = y - x
               | otherwise = x - y
+
+secondPart :: String -> Int
+secondPart content = do
+                      let
+                        lists = readLists content
+                        left = fst lists
+                        countsOfRight = countAmounts $ snd lists
+                      sum $ map (calcSimilarity countsOfRight) left
+
+calcSimilarity :: IntMap Int -> Int -> Int
+calcSimilarity counts key = key * fromMaybe 0 (counts IntMap.!? key)
+
+
+countAmounts :: [Int] -> IntMap Int
+countAmounts list = let
+                      amounts :: [(Int, Int)]
+                      amounts = map (, 1) list
+                    in IntMap.fromListWith (+) amounts

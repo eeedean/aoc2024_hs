@@ -15,6 +15,7 @@ library
   ghc-options:      -Wall
   build-depends:
     , base
+    , containers
     , text
 
 executable aoc2024
