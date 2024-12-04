@@ -13,13 +13,16 @@ realfile = "input-files/1.real.txt"
 dayone :: IO ()
 dayone = do
           inFile <- readFile realfile
-          let 
-            lists  = readLists inFile
-            left   = sort $ fst lists
-            right  = sort $ snd lists
-            distances = zipWith distanceBetween left  right
-            result = sum distances
-          print result
+          putStrLn $ "summed up distance between lists is " ++ show (firstPart inFile)
+
+firstPart :: String -> Int
+firstPart content = do
+                    let
+                      lists  = readLists content
+                      left   = sort $ fst lists
+                      right  = sort $ snd lists
+                      distances = zipWith distanceBetween left  right
+                    sum distances
             
 readLists :: String -> ([Int], [Int])
 readLists input = unzip $ map splitLine (lines input)
