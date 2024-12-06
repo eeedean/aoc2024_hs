@@ -8,6 +8,7 @@ build-type:    Simple
 library
   exposed-modules:
     DayOne
+    DayTwo
     Lib
 
   hs-source-dirs:   src
